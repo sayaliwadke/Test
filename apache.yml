@@ -1,7 +1,21 @@
 ---
-- name: confirm using the latest Apache server
-  become: yes
+- hosts: all
+  become: true
   become_method: sudo
-  yum: 
-    name: httpd 
-    state: latest
+  vars_files:
+    - vars/default.yml
+  tasks:
+    - name: Install prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+    - name: Install Apache
+      apt: name=apache2 update_cache=yes state=latest
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted    
