@@ -3,7 +3,7 @@
   hosts: localhost
   tasks:
   - name: Install apache packages 
-    become: yes
+    become: true
     become_method: sudo
     yum:
       name: httpd
