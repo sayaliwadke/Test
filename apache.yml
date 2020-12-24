@@ -1,6 +1,9 @@
 ---
 - name: This sets up an httpd webserver
   hosts: localhost
+  remote_user: servicenow
+  become: true
+  become_method: sudo
   tasks:
   - name: Install apache packages 
     yum:
